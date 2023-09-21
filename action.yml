@@ -22,3 +22,26 @@ runs:
     - run: goodbye.sh
       shell: bash
 
+name: 'Ciao Mondo'
+description: '2nd action test'
+inputs:
+  who-to-greet:  # id of input
+    description: 'Who to greet'
+    required: true
+    default: 'Mondo'
+outputs:
+  random-number:
+    description: "Random number"
+    value: ${{ steps.random-number-generator.outputs.random-number }}
+runs:
+  using: "composite"
+  steps:
+    - run: echo Ciao ${{ inputs.who-to-greet }}.
+      shell: bash
+    - id: random-number-generator
+      run: echo "ciao-random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
+      shell: bash
+    - run: echo "This is the ciao gh path -> ${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
+    - run: ciao.sh
+      shell: bash
